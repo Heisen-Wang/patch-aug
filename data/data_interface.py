@@ -5,6 +5,7 @@ import pytorch_lightning as pl
 from torch.utils.data import DataLoader
 from torch.utils.data.sampler import WeightedRandomSampler
 
+from dataloader_pretrain  import prepare_dataloader
 
 class DInterface(pl.LightningDataModule):
 
@@ -39,13 +40,13 @@ class DInterface(pl.LightningDataModule):
     #     return DataLoader(self.trainset, batch_size=self.batch_size, num_workers=self.num_workers, sampler = sampler)
 
     def train_dataloader(self):
-        return DataLoader(self.trainset, batch_size=self.batch_size, num_workers=self.num_workers, shuffle=True)
+        return prepare_dataloader(self.trainset, batch_size=self.batch_size, num_workers=self.num_workers, shuffle=True)
 
     def val_dataloader(self):
-        return DataLoader(self.valset, batch_size=self.batch_size, num_workers=self.num_workers, shuffle=False)
+        return prepare_dataloader(self.valset, batch_size=self.batch_size, num_workers=self.num_workers, shuffle=False)
 
     def test_dataloader(self):
-        return DataLoader(self.testset, batch_size=self.batch_size, num_workers=self.num_workers, shuffle=False)
+        return prepare_dataloader(self.testset, batch_size=self.batch_size, num_workers=self.num_workers, shuffle=False)
 
     def load_data_module(self):
         name = self.dataset
